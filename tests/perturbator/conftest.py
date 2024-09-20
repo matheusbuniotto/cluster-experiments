@@ -26,7 +26,7 @@ def continuous_df():
 def continuous_mixed_df():
     return pd.DataFrame(
         {
-            "target": [0.5, -50.0, 50.0, 0.5],
+            "target": [0.5, -50, 50, 0.5],
             "treatment": ["A", "B", "B", "A"],
         }
     )
