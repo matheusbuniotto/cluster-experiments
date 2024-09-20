@@ -8,6 +8,7 @@ from cluster_experiments.perturbator import (
     BinaryPerturbator,
     ConstantPerturbator,
     NormalPerturbator,
+    RelativeMixedPerturbator,
     RelativePositivePerturbator,
     SegmentedBetaRelativePerturbator,
     UniformPerturbator,
@@ -79,6 +80,23 @@ def test_constant_perturbator(average_effect, avg_target, perturbator, continuou
     up = perturbator(average_effect=average_effect)
     assert (
         up.perturbate(continuous_df).query("treatment == 'B'")["target"].mean()
+        == avg_target
+    )
+
+
+@pytest.mark.parametrize(
+    "average_effect, avg_target, perturbator",
+    [
+        (0.1, 2.5, RelativeMixedPerturbator),  # -55 + 0.45
+        (-0.1, -2.5, RelativeMixedPerturbator),  # - 0.9 + 0.55
+    ],
+)
+def test_relative_mixed_perturbator(
+    average_effect, avg_target, perturbator, continuous_mixed_df
+):
+    up = perturbator(average_effect=average_effect)
+    assert (
+        up.perturbate(continuous_mixed_df).query("treatment == 'B'")["target"].mean()
         == avg_target
     )
 

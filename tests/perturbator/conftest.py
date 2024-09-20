@@ -23,6 +23,16 @@ def continuous_df():
 
 
 @pytest.fixture
+def continuous_mixed_df():
+    return pd.DataFrame(
+        {
+            "target": [0.5, -50.0, 50.0, 0.5],
+            "treatment": ["A", "B", "B", "A"],
+        }
+    )
+
+
+@pytest.fixture
 def generate_clustered_data() -> pd.DataFrame:
     analysis_df = pd.DataFrame(
         {
